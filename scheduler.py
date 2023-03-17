@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 print("Hello World")
 
@@ -17,9 +18,8 @@ hallsArray = []
 # ----------------------------CLASSES--------------------------------------------
 
 class timing:
-    def __init__(self, startTime, endTime):
-        self.startTime = startTime
-        self.endTime = endTime
+    def __init__(self, timingName):
+        self.timingName = timingName
         
 class clash:
     def __init__(self, firstCourse, secondCourse):
@@ -34,6 +34,11 @@ class hall:
     def __init__(self, hallName):
         self.hallName = hallName
 
+class chromosome:
+    def __init__(self, hall, timing, courseName):
+        self.hall = hall
+        self.timing = timing
+        self.courseName = courseName
 
 # ----------------------------FUNCTIONS--------------------------------------------
 
@@ -121,6 +126,14 @@ def hallsInitialization(hallNum):
         hallsArray.append(hall)
         count += 1
 
+def timeSlotInitialization(noTimings):   
+    count = 1
+    while (count <= noTimings):
+        timing.timingName = "T" + str(count)
+        print(timing.timingName)
+        timingsArray.append(timing)
+        count += 1
+
 # ----------------------------PRE-GENERATION RULE CHECKS--------------------------------------------
 
 def filterData():
@@ -135,7 +148,20 @@ def filterData():
 # ----------------------------CHROMOSOME GENERATION--------------------------------------------
 
 def chromosomeGeneration():
-    print("Chromosome generation")
+    
+    #lets start by making 10 chromosomes first
+    
+    for i in range(0, 10):
+        randCourse = random.randint(0, len(coursesArray) - 1)
+        randHall = random.randint(0, len(hallsArray) - 1)
+        randTiming = random.randint(0, len(timingsArray) - 1)
+        chromosome.hall = hallsArray[randHall].hallName
+        chromosome.timing = timingsArray[randTiming].timingName
+        chromosome.courseName = coursesArray[randCourse].courseName
+        print(chromosome.hall)
+        print(chromosome.timing)
+        print(chromosome.courseName)
+        chromosomeArray.append(chromosome)   
 
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
@@ -156,6 +182,8 @@ hallsInitialization(int(hallNum))
 checkCommonStudents()
 
 maxCommonStd = countLinkages()
+
+filterData()
 
 #we need to check the connections of the clashes
 #and also need to keep track of the no of clashes that occurs for each course
