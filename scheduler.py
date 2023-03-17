@@ -112,14 +112,6 @@ def courseInitialization(courseNum):
         print(course.courseName)
         coursesArray.append(course)
         count += 1
-    printCourses()
-
-#printing out coursesArray
-
-def printCourses():
-    print("Printing out the courses array")
-    print(coursesArray)
-
         
 def hallsInitialization(hallNum):
     count = 1
@@ -128,13 +120,23 @@ def hallsInitialization(hallNum):
         print(hall.hallName)
         hallsArray.append(hall)
         count += 1
-    printHalls()
-    
-def printHalls():
-    print("Printing out the halls array")
-    print(hallsArray)
 
-    
+# ----------------------------PRE-GENERATION RULE CHECKS--------------------------------------------
+
+def filterData():
+    if((hallNum * noTimings) + maxCommonStd >= courseNum):
+        chromosomeGeneration()
+    else:
+        print("The data given cannot be used to generate a schedule")
+        print("The number of halls allocated against this number of courses in this schedule is not enough")
+        print("Please enter more halls, or lower the number of courses and try again")
+        exit()
+
+# ----------------------------CHROMOSOME GENERATION--------------------------------------------
+
+def chromosomeGeneration():
+    print("Chromosome generation")
+
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
 print("Please enter the number of halls that are available for use")
@@ -153,12 +155,12 @@ hallsInitialization(int(hallNum))
 
 checkCommonStudents()
 
-print(countLinkages())
+maxCommonStd = countLinkages()
 
 #we need to check the connections of the clashes
 #and also need to keep track of the no of clashes that occurs for each course
 
-print("End of function for now")
+print("End of Program")
 
 exit()
 #now we need the checking function to see if the values given can be used in chormosome generation or not

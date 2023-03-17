@@ -13,3 +13,11 @@ we now need to like, enforce those rules
 so first of all we are going to check the stuff that we need
 
 oh and we're also going to get this on git, just to be sure 
+
+now that we have added this to git, we can now go onto getting into the pre-chormosome generation checks
+
+so basically we entered in the pre-generation rules checks, and now we move onto chromosome generation
+
+to generate the chromosomes, we need to have our 4-5 pools of data, and then randomly get different indexes from them to generate our 
+chromosomes
+
