@@ -1,0 +1,15 @@
+so basically i remembered making this after i got stuck so that i can see what i wanted to d o
+
+rn im assigning values to all the halls, timings and courses
+
+while also recording all of the clashes as specified by the user
+
+now i only need to maintain a list of the number of clashes for each courses
+
+now that we got the things that we need according to the rules that we set out in the beginning
+
+we now need to like, enforce those rules
+
+so first of all we are going to check the stuff that we need
+
+oh and we're also going to get this on git, just to be sure 

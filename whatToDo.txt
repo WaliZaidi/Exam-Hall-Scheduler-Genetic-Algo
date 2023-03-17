@@ -1,0 +1,26 @@
+so what we need to do is detailed in this file 
+
+basically we need to generate the chromosome for the exam halls
+
+after consideration, we realized that all of the prerquisite information needs to be gathered before we can even start to create time slots of
+the exam halls, since all the the variables are interconnected to one another.
+
+another heuristic for the fitness function is the fact that the number of possible combinaitons for the halls and the timings cannot be 
+smaller than the number of courses that are to be arranged (H x T >= C)
+
+basically, we have figured out what we need to filter out the data:
+
+and that amounts to check from the number of halls times the no of slots available is greater or equal to the number of courses, as well as taking interconnected
+account the fact of common students
+
+basically:
+
+    (H x T) + (MAX(commonStudent_forCoursex)) >= C
+
+    if this is true, then you can go forward to chromosome generation
+
+    however, if this fails, then you need to do one of two things
+
+        1. Increase the number of halls by MAX(commonStudent_forCoursex)
+        2. Lower the number of courses offered for that particular day
+        3. Just fycking give up lmfao
