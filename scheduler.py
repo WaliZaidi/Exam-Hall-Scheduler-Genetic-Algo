@@ -1,8 +1,6 @@
 import random
 import numpy as np
 
-
-
 print("Hello World")
 
 # ----------------------------ARRAYS--------------------------------------------
@@ -136,28 +134,26 @@ def timeSlotInitialization(noTimings):
         timingsArray.append(timing)
         count += 1
 
-# ----------------------------PRE-GENERATION RULE CHECKS--------------------------------------------
+#--------------------------------------------PRE-GENERATION RULE CHECKS--------------------------------------------
 
 def filterData():
-    if((hallNum * noTimings) + maxCommonStd >= courseNum):
+    if((int(hallNum) * noTimings) + maxCommonStd >= int(courseNum)):
         chromosomeGeneration()
     else:
         print("The data given cannot be used to generate a schedule")
         print("The number of halls allocated against this number of courses in this schedule is not enough")
-        print("The number of addititional halls required is : " + maxCommonStd)
+        print("The number of addititional halls required is : " + str((int(hallNum) * noTimings) + maxCommonStd))
         print("Fill in the required number of halls? Answer with y/n")
         checkHallCorrection = input()
         while (checkHallCorrection != "y" and checkHallCorrection != "n"):
             print("Please only enter y/n")
             checkHallCorrection = input()
         if (checkHallCorrection == "y"):
-            hallsInitialization(int(hallNum) + maxCommonStd)
+            hallsInitialization((int(hallNum) * noTimings) + maxCommonStd)
             chromosomeGeneration()
         elif (checkHallCorrection == "n"):
             exit()
             
-            
-       #ueuueue     
             
 # ----------------------------CHROMOSOME GENERATION--------------------------------------------
 
@@ -175,7 +171,10 @@ def chromosomeGeneration():
         print(chromosome.hall)
         print(chromosome.timing)
         print(chromosome.courseName)
+        print("")
         chromosomeArray.append(chromosome)   
+        
+
 
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
@@ -192,6 +191,8 @@ createTimings()
 courseInitialization(int(courseNum))
 
 hallsInitialization(int(hallNum))
+
+timeSlotInitialization(noTimings)
 
 checkCommonStudents()
 
