@@ -156,6 +156,9 @@ def filterData():
         elif (checkHallCorrection == "n"):
             exit()
             
+            
+       #ueuueue     
+            
 # ----------------------------CHROMOSOME GENERATION--------------------------------------------
 
 def chromosomeGeneration():
