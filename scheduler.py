@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 
 
@@ -143,9 +144,18 @@ def filterData():
     else:
         print("The data given cannot be used to generate a schedule")
         print("The number of halls allocated against this number of courses in this schedule is not enough")
-        print("Please enter more halls, or lower the number of courses and try again")
-        exit()
-
+        print("The number of addititional halls required is : " + maxCommonStd)
+        print("Fill in the required number of halls? Answer with y/n")
+        checkHallCorrection = input()
+        while (checkHallCorrection != "y" and checkHallCorrection != "n"):
+            print("Please only enter y/n")
+            checkHallCorrection = input()
+        if (checkHallCorrection == "y"):
+            hallsInitialization(int(hallNum) + maxCommonStd)
+            chromosomeGeneration()
+        elif (checkHallCorrection == "n"):
+            exit()
+            
 # ----------------------------CHROMOSOME GENERATION--------------------------------------------
 
 def chromosomeGeneration():
