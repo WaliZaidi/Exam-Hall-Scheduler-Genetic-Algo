@@ -51,7 +51,7 @@ def createTimings():
         print(timing.startTime)
         print(timing.endTime)
     
-    
+        
 def checkCommonStudents():
     noMoreStudents = False
     print("Are there any common students :D between courses? Answer with y/n")
@@ -86,6 +86,7 @@ def checkCommonStudents():
 
 #basically this is recording the number of clashes for each individial course
 #this is also going to return the max number of common links that a course has
+#check for git linkage
     
 def countLinkages():
     print("course numbers :" + courseNum)
@@ -134,6 +135,14 @@ def timeSlotInitialization(noTimings):
         timingsArray.append(timing)
         count += 1
 
+def printArrays():
+    count = 0
+    while (count < noTimings):
+        print(timingsArray[count])
+        print(coursesArray[count])
+        print(hallsArray[count])
+        count += 1
+
 #--------------------------------------------PRE-GENERATION RULE CHECKS--------------------------------------------
 
 def filterData():
@@ -154,7 +163,6 @@ def filterData():
         elif (checkHallCorrection == "n"):
             exit()
             
-            
 # ----------------------------CHROMOSOME GENERATION--------------------------------------------
 
 def chromosomeGeneration():
@@ -165,6 +173,9 @@ def chromosomeGeneration():
         randCourse = random.randint(0, len(coursesArray) - 1)
         randHall = random.randint(0, len(hallsArray) - 1)
         randTiming = random.randint(0, len(timingsArray) - 1)
+        print(randCourse)
+        print(randHall)
+        print(randTiming)
         chromosome.hall = hallsArray[randHall].hallName
         chromosome.timing = timingsArray[randTiming].timingName
         chromosome.courseName = coursesArray[randCourse].courseName
@@ -172,10 +183,9 @@ def chromosomeGeneration():
         print(chromosome.timing)
         print(chromosome.courseName)
         print("")
-        chromosomeArray.append(chromosome)   
+        chromosomeArray.append(chromosome)
         
-
-
+           
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
 print("Please enter the number of halls that are available for use")
@@ -194,30 +204,14 @@ hallsInitialization(int(hallNum))
 
 timeSlotInitialization(noTimings)
 
+printArrays()
+
 checkCommonStudents()
 
 maxCommonStd = countLinkages()
 
 filterData()
 
-#we need to check the connections of the clashes
-#and also need to keep track of the no of clashes that occurs for each course
-
 print("End of Program")
 
 exit()
-#now we need the checking function to see if the values given can be used in chormosome generation or not
-
-# def checkingFunction():
-    
-    
-
-
-    
-    
-
-
-
-# creating a chormosome for a tuple having values of exam hall number, time slot, and course name
-
-# chromosomeArray.append((1, 1, "CSE 101"))
