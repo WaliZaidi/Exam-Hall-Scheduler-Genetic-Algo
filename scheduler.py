@@ -16,6 +16,7 @@ clashArray = []
 hallsArray = []
 
 scheduleArray = []
+
 # ----------------------------CLASSES--------------------------------------------
 
 class timing:
@@ -91,7 +92,7 @@ def checkCommonStudents():
 
 #basically this is recording the number of clashes for each individial course
 #this is also going to return the max number of common links that a course has
-#check for git linkage
+
     
 def countLinkages():
     print("course numbers :" + courseNum)
@@ -202,7 +203,6 @@ def fitnessFunction():
         fitnessValue += checkCoursePresence(scheduleArray[i]) #this is going to check if the course is present in the schedule, and if it has appeared more than once in the schedule
         fitnessValue += conditionOne(scheduleArray[i]) #this is going to check if the course has been assigned to the same hall and timing
         fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check against the clash array and see if common courses are assigned to the same timing
-        fitnessValue += conditionThree(scheduleArray[i]) #this is going to check if the time exceeds that which is allocated 
         scheduleArray[i].fitnessValue = fitnessValue
         print("printing the fitness value")
         print(fitnessValue)
@@ -219,16 +219,33 @@ def checkCoursePresence(chromosomeArray):
         for k in range(0, len(courseNum) - 1):
             if (chromosomeArray[j].courseName == coursesArray[k].courseName):
                 checkingArray[k] += 1
+                fitnessValueCheckingPresence += 1
                 if (checkingArray[k] > 1):
                     fitnessValueCheckingPresence += -1
-        
-        
+            
         for l in range(0, len(courseNum) - 1):
             if (checkingArray[l] == 0):
                 fitnessValueCheckingPresence += -3
     
     return fitnessValueCheckingPresence
     
+def conditionOne(chromosomeArray):
+    #checking if the same course has been assigned to the same hall and timing
+    fitnessValueConditionOne = 0
+    if (len(clashArray) == 0):
+        return fitnessValueConditionOne
+    else:
+        for i in range(0, len(clashArray) - 1):
+            for j in range(0, len(chromosomeArray) - 1):
+                if (clashArray[i].firstCourse == chromosomeArray[j].courseName):
+                    if (chromosomeArray[j].timing == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].timing):
+                        if (chromosomeArray[j].hall == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].hall):
+                            fitnessValueConditionOne += -10
+
+def conditionTwo(chromosomeArray):
+    v = 0
+                    
+                    
            
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
