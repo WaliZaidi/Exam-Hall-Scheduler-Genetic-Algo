@@ -27,7 +27,7 @@ class clash:
         self.secondCourse = secondCourse
 
 class course:
-    def __init__(self, courseName) -> None:
+    def __init__(self, courseName):
         self.courseName = courseName
         
 class hall:
@@ -51,7 +51,7 @@ def createTimings():
         print(timing.startTime)
         print(timing.endTime)
     
-        
+    
 def checkCommonStudents():
     noMoreStudents = False
     print("Are there any common students :D between courses? Answer with y/n")
@@ -94,8 +94,6 @@ def countLinkages():
     for i in range(len(clashArray)):
         firstClash = int(clashArray[i].firstCourse[-1])
         secondClash = int(clashArray[i].secondCourse[-1])
-        # print("first clash" + firstClash)
-        # print("second clash" + secondClash)
         numOfClashes[firstClash] += 1
         numOfClashes[secondClash] += 1
     
@@ -106,42 +104,42 @@ def countLinkages():
     for i in range(0, len(numOfClashes)):
         if (numOfClashes[i] > maxi):
             maxi = numOfClashes[i]
-    
     return maxi        
     
 # ----------------------------INITIALIZATION FUNCTIONS--------------------------------------------
 
 def courseInitialization(courseNum):
-    count = 1
-    while (count <= courseNum):
-        course.courseName = "C" + str(count)
-        print(course.courseName)
-        coursesArray.append(course)
-        count += 1
+    count1 = 1
+    while (count1 <= courseNum):
+        course1 = course("C" + str(count1))
+        # print(course.courseName) 
+        coursesArray.append(course1)
+        count1 += 1
         
 def hallsInitialization(hallNum):
-    count = 1
-    while (count <= hallNum):
-        hall.hallName = "H" + str(count)
-        print(hall.hallName)
-        hallsArray.append(hall)
-        count += 1
+    count2 = 1
+    while (count2 <= hallNum):
+        hall2 = hall("H" + str(count2))
+        print(hall2.hallName)
+        hallsArray.append(hall2)
+        count2 += 1
 
 def timeSlotInitialization(noTimings):   
-    count = 1
-    while (count <= noTimings):
-        timing.timingName = "T" + str(count)
-        print(timing.timingName)
-        timingsArray.append(timing)
-        count += 1
+    count3 = 1
+    while (count3 <= noTimings):
+        timing2 = timing("T" + str(count3))
+        timingsArray.append(timing2)
+        count3 += 1
 
 def printArrays():
-    count = 0
-    while (count < noTimings):
-        print(timingsArray[count])
-        print(coursesArray[count])
-        print(hallsArray[count])
-        count += 1
+    count4 = 0
+    while (count4 < noTimings):
+        print("printing the arrays values")
+        print(timingsArray[count4].timingName)
+        print(coursesArray[count4].courseName)
+        print(hallsArray[count4].hallName)
+        print(count4)
+        count4 += 1
 
 #--------------------------------------------PRE-GENERATION RULE CHECKS--------------------------------------------
 
@@ -173,18 +171,19 @@ def chromosomeGeneration():
         randCourse = random.randint(0, len(coursesArray) - 1)
         randHall = random.randint(0, len(hallsArray) - 1)
         randTiming = random.randint(0, len(timingsArray) - 1)
+        print("printing the randomly generated numbers")
         print(randCourse)
         print(randHall)
         print(randTiming)
         chromosome.hall = hallsArray[randHall].hallName
         chromosome.timing = timingsArray[randTiming].timingName
         chromosome.courseName = coursesArray[randCourse].courseName
+        print("printing the chromosome data")
         print(chromosome.hall)
         print(chromosome.timing)
         print(chromosome.courseName)
         print("")
         chromosomeArray.append(chromosome)
-        
            
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
