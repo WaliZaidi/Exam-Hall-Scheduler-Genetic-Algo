@@ -15,6 +15,7 @@ clashArray = []
 
 hallsArray = []
 
+scheduleArray = []
 # ----------------------------CLASSES--------------------------------------------
 
 class timing:
@@ -40,6 +41,12 @@ class chromosome:
         self.timing = timing
         self.courseName = courseName
 
+class schedule:
+    def __init__(self, chromosomeArray, fitness):
+        self.chromosomeArray = chromosomeArray
+        self.fitness = fitness
+        
+
 # ----------------------------FUNCTIONS--------------------------------------------
 
 def createTimings():
@@ -48,8 +55,6 @@ def createTimings():
     for i in range(0, 9):
         timing.startTime = initialTime + (i * 100)
         timing.endTime = timing.startTime + (100)
-        print(timing.startTime)
-        print(timing.endTime)
     
     
 def checkCommonStudents():
@@ -167,14 +172,11 @@ def chromosomeGeneration():
     
     #lets start by making 10 chromosomes first
     
-    for i in range(0, 10):
+    for i in range(0, len(coursesArray) - 1):
+        #generating the random numbers for the chromosomes
         randCourse = random.randint(0, len(coursesArray) - 1)
         randHall = random.randint(0, len(hallsArray) - 1)
         randTiming = random.randint(0, len(timingsArray) - 1)
-        print("printing the randomly generated numbers")
-        print(randCourse)
-        print(randHall)
-        print(randTiming)
         chromosome.hall = hallsArray[randHall].hallName
         chromosome.timing = timingsArray[randTiming].timingName
         chromosome.courseName = coursesArray[randCourse].courseName
@@ -184,6 +186,49 @@ def chromosomeGeneration():
         print(chromosome.courseName)
         print("")
         chromosomeArray.append(chromosome)
+    return chromosomeArray
+
+#basically here we are generating the total schedule using those chromosomes that we just created
+        
+def scheduleGeneration():
+    for i in range(0, 100):
+        scheduleArray.append(chromosomeGeneration())
+        
+# ----------------------------FITNESS FUNCTION--------------------------------------------
+
+def fitnessFunction():
+    for i in range(0, len(scheduleArray) - 1):
+        fitnessValue = 0
+        fitnessValue += checkCoursePresence(scheduleArray[i]) #this is going to check if the course is present in the schedule, and if it has appeared more than once in the schedule
+        fitnessValue += conditionOne(scheduleArray[i]) #this is going to check if the course has been assigned to the same hall and timing
+        fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check against the clash array and see if common courses are assigned to the same timing
+        fitnessValue += conditionThree(scheduleArray[i]) #this is going to check if the time exceeds that which is allocated 
+        scheduleArray[i].fitnessValue = fitnessValue
+        print("printing the fitness value")
+        print(fitnessValue)
+
+def checkCoursePresence(chromosomeArray):
+    
+    fitnessValueCheckingPresence = 0
+    
+    checkingArray = [] #basically making the array to check
+    for i in range(0, len(courseNum) - 1):
+        checkingArray[i] = 0
+    
+    for j in range(0, len(chromosomeArray) - 1):
+        for k in range(0, len(courseNum) - 1):
+            if (chromosomeArray[j].courseName == coursesArray[k].courseName):
+                checkingArray[k] += 1
+                if (checkingArray[k] > 1):
+                    fitnessValueCheckingPresence += -1
+        
+        
+        for l in range(0, len(courseNum) - 1):
+            if (checkingArray[l] == 0):
+                fitnessValueCheckingPresence += -3
+    
+    return fitnessValueCheckingPresence
+    
            
 # ----------------------------MAIN FUNCTION--------------------------------------------
         

@@ -21,3 +21,23 @@ so basically we entered in the pre-generation rules checks, and now we move onto
 to generate the chromosomes, we need to have our 4-5 pools of data, and then randomly get different indexes from them to generate our 
 chromosomes
 
+So basically now what we need to do is find a way to analyze the fitness function
+
+said fitness function is checking the various parameters that we need to evaluate for the schedule needs
+
+    said parameters being:
+        
+        number of courses <= timeslots
+        if the hall and time slots are same, then courses cannot be the same 
+        if a student has common course, then the timing of those courses cannot be the same
+        also make sure that each course appears at least one time in the schedule
+        that, and we can also make sure that they only appear once
+
+        i think those are the basic rules that we defined and they are the ones that we need to pay the most attention to
+
+
+ok so before the schedule can actually be generated, i realised that what i was doing rn was only making the total possible ways that the courses
+and the rest of the things could be arranged, and that i would need another array to handle the actual schedule
+
+furthermore, while the number of chormosomes in a schedule is determined by the numbre of courses that that schedule needs to accommodate, the
+number of possible schedules is not limited by such constraints
