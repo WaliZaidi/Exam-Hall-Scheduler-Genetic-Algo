@@ -221,9 +221,7 @@ def checkCoursePresence(schedule):
     fitnessValueCheckingPresence = 0
     
     checkingArray = np.zeros(int(courseNum), dtype=int) #basically making the array to check
-    for i in range(0, len(courseNum)):
-        checkingArray[i] = 0
-    
+  
     for j in range(0, len(arrayChromo) - 1):
         for k in range(0, len(courseNum) - 1):
             if (arrayChromo[j].courseName == coursesArray[k].courseName):
