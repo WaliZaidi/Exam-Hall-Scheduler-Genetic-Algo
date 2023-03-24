@@ -41,3 +41,10 @@ and the rest of the things could be arranged, and that i would need another arra
 
 furthermore, while the number of chormosomes in a schedule is determined by the numbre of courses that that schedule needs to accommodate, the
 number of possible schedules is not limited by such constraints
+
+pain peko, lots of work done since the last one 
+
+schedule is done, gets data, the first and second fitness functions are done and furthermore, now we're actually making progress instead of sagging in one plac.
+
+the checking system for the clash arrays are in place, but now we need to check those that are not clashing to make sure tht they too are not clashing
+

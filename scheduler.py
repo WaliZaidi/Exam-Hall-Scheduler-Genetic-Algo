@@ -103,8 +103,8 @@ def checkCommonStudents():
     
 def countLinkages():
     print("course numbers :" + courseNum)
-    numOfClashes = [0] * int(courseNum)
-    for i in range(len(clashArray)):
+    numOfClashes = np.zeros(int(courseNum), dtype = int)
+    for i in range(0, len(clashArray) - 1):
         firstClash = int(clashArray[i].firstCourse[-1])
         secondClash = int(clashArray[i].secondCourse[-1])
         numOfClashes[firstClash] += 1
@@ -214,7 +214,7 @@ def fitnessFunction():
         fitnessValue = 0
         fitnessValue += checkCoursePresence(scheduleArray[i]) #this is going to check if the course is present in the schedule, and if it has appeared more than once in the schedule
         fitnessValue += conditionOne(scheduleArray[i]) #this is going to check if the clash course has been assigned to the same hall and timing
-        fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned to the same hall and timing
+        # fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned to the same hall and timing
         # fitnessValue += conditionThree(scheduleArray[i]) #this is going to check 
         scheduleArray[i].fitnessValue = fitnessValue
         print("printing the fitness value")
@@ -271,6 +271,9 @@ def conditionOne(schedule):
     return fitnessValueConditionOne
 
 
+def conditionTwo(schedule):
+    scheduleChromo = schedule.chromosomeArray2
+    
            
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
