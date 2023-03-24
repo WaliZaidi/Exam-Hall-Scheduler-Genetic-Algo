@@ -44,8 +44,8 @@ class chromosome:
 
 class schedule:
     def __init__(self, chromosomeArray2, fitness):
-        chromosomeArray2 = []
-        self.chromosomeArray = chromosomeArray2
+        chromosomeArray2 = list()
+        self.chromosomeArray2 = chromosomeArray2
         self.fitness = fitness
         
 
@@ -116,18 +116,17 @@ def countLinkages():
 # ----------------------------INITIALIZATION FUNCTIONS--------------------------------------------
 
 def courseInitialization(courseNum):
-    count1 = 1
+    count1 = 0
     while (count1 <= courseNum):
-        course1 = course("C" + str(count1))
+        course1 = course("C" + str(count1 + 1))
         # print(course.courseName) 
         coursesArray.append(course1)
         count1 += 1
-        
+                
 def hallsInitialization(hallNum):
     count2 = 1
     while (count2 <= hallNum):
         hall2 = hall("H" + str(count2))
-        print(hall2.hallName)
         hallsArray.append(hall2)
         count2 += 1
 
@@ -160,55 +159,48 @@ def filterData():
             
 # ----------------------------CHROMOSOME GENERATION--------------------------------------------
 
-def chromosomeGeneration():
+def chromosomeGeneration(valueGetterSchedule):
     
-    chromosomeArray = []
-    print(len(coursesArray))
+    valueGetterSchedule.chromosomeArray2 = list()
     
-    
-    for i in range(0, len(coursesArray) - 1):
+    chromosomeArray1 = list()
+   
+    for i in range(0, len(coursesArray)):
         chromosome1 = chromosome("", "", "")
         #generating the random numbers for the chromosomes
-        randCourse = random.randint(0, len(coursesArray) - 1)
+        randCourse = i #random.randint(0, len(coursesArray) - 1)
         randHall = random.randint(0, len(hallsArray) - 1)
         randTiming = random.randint(0, len(timingsArray) - 1)
         chromosome1.hall = hallsArray[randHall].hallName
         chromosome1.timing = timingsArray[randTiming].timingName
         chromosome1.courseName = coursesArray[randCourse].courseName
-        print(chromosome1.hall + " " + chromosome1.timing + " " + chromosome1.courseName)
-        print(" ")
-        chromosomeArray.append(chromosome1)
+        chromosomeArray1.append(chromosome1)
         # chromosome = chromosome("", "", "")
     
-    print("The chromosome array is : ")
+    valueGetterSchedule.chromosomeArray2 = chromosomeArray1
     
-    for j in range(0, len(chromosomeArray)):
-        print(chromosomeArray[j].courseName + " " + chromosomeArray[j].hall + " " + chromosomeArray[j].timing)
-        print(" ")
-    
-    return chromosomeArray
+    return valueGetterSchedule
 
 #basically here we are generating the total schedule using those chromosomes that we just created
         
 def scheduleGeneration():
     print("Generating the schedule")
     for i in range(0, 10):
-        addingArray = []
-        addingArray = chromosomeGeneration()
-        fitness = 0
-        scheduler = schedule(addingArray, fitness)
+        valueGetterSchedule = schedule([], 0)
+        scheduler = chromosomeGeneration(valueGetterSchedule)
         scheduleArray.append(scheduler)
     printSchedule()
+    fitnessFunction()
 
 
 def printSchedule():
     print("The schedule is : ")
     for i in range(0, len(scheduleArray) - 1):
-        scheduler2 = scheduleArray[i]
-        print(scheduler2.chromosomeArray)
-        # for j in range(0, len(scheduler2.chromosomeArray) - 1):
-        #     print(scheduler2.chromosomeArray[j].courseName + " " + scheduler2.chromosomeArray[j].hall + " " + scheduler2.chromosomeArray[j].timing)
-            
+        scheduler2 = schedule([], 0)
+        scheduler2.chromosomeArray2 = scheduleArray[i].chromosomeArray2
+        for j in range(0, len(scheduler2.chromosomeArray2) - 1):
+            print(scheduler2.chromosomeArray2[j].courseName + " " + scheduler2.chromosomeArray2[j].hall + " " + scheduler2.chromosomeArray2[j].timing)
+        print(" ")
 # ----------------------------FITNESS FUNCTION--------------------------------------------
 
 def fitnessFunction():
@@ -216,22 +208,25 @@ def fitnessFunction():
         fitnessValue = 0
         fitnessValue += checkCoursePresence(scheduleArray[i]) #this is going to check if the course is present in the schedule, and if it has appeared more than once in the schedule
         fitnessValue += conditionOne(scheduleArray[i]) #this is going to check if the course has been assigned to the same hall and timing
-        fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check 
+        # fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned more than one time
+        # fitnessValue += conditionThree(scheduleArray[i]) #this is going to check 
         scheduleArray[i].fitnessValue = fitnessValue
         print("printing the fitness value")
         print(fitnessValue)
 
-def checkCoursePresence(chromosomeArray):
+def checkCoursePresence(schedule):
+    
+    arrayChromo = schedule.chromosomeArray2
     
     fitnessValueCheckingPresence = 0
     
-    checkingArray = [] #basically making the array to check
-    for i in range(0, len(courseNum) - 1):
+    checkingArray = np.zeros(int(courseNum), dtype=int) #basically making the array to check
+    for i in range(0, len(courseNum)):
         checkingArray[i] = 0
     
-    for j in range(0, len(chromosomeArray) - 1):
+    for j in range(0, len(arrayChromo) - 1):
         for k in range(0, len(courseNum) - 1):
-            if (chromosomeArray[j].courseName == coursesArray[k].courseName):
+            if (arrayChromo[j].courseName == coursesArray[k].courseName):
                 checkingArray[k] += 1
                 fitnessValueCheckingPresence += 1
                 if (checkingArray[k] > 1):
@@ -243,7 +238,10 @@ def checkCoursePresence(chromosomeArray):
     
     return fitnessValueCheckingPresence
     
-def conditionOne(chromosomeArray):
+def conditionOne(schedule):
+    
+    chromosomeArray = schedule.chromosomeArray2
+    
     #checking if the same course has been assigned to the same hall and timing
     fitnessValueConditionOne = 0
     if (len(clashArray) == 0):
@@ -257,10 +255,7 @@ def conditionOne(chromosomeArray):
                         if (chromosomeArray[j].hall == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].hall):
                             fitnessValueConditionOne += -10
 
-def conditionTwo(chromosomeArray):
-    v = 0
-                    
-                    
+    return fitnessValueConditionOne
            
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
