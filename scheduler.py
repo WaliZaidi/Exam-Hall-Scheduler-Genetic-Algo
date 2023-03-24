@@ -64,6 +64,7 @@ def checkCommonStudents():
     print("Are there any common students :D between courses? Answer with y/n")
     checkMore = input()
     while(noMoreStudents == False):
+        clash1 = clash("", "")
         while (checkMore != "y" and checkMore != "n"):
             print("Please only enter y/n")
             checkMore = input()
@@ -72,10 +73,10 @@ def checkCommonStudents():
             courseOne = input()
             print("Enter the second course name")
             courseTwo = input()
-            clash.firstCourse = courseOne
-            clash.secondCourse = courseTwo
+            clash1.firstCourse = courseOne
+            clash1.secondCourse = courseTwo
             # countLinkages(courseOne, courseTwo)
-            clashArray.append(clash)
+            clashArray.append(clash1)
             
             #now to check if there are more common students
             
@@ -85,6 +86,11 @@ def checkCommonStudents():
                 print("Please only enter y/n")
                 checkAgain = input()
             if (checkAgain == "n"):
+                print("The number of clashes is : ")
+                print(len(clashArray))
+                for i in range(0, len(clashArray)):
+                    print(clashArray[i].firstCourse)
+                    print(clashArray[i].secondCourse)
                 noMoreStudents == True
                 break
         elif (checkMore == "n"):
@@ -207,8 +213,8 @@ def fitnessFunction():
     for i in range(0, len(scheduleArray) - 1):
         fitnessValue = 0
         fitnessValue += checkCoursePresence(scheduleArray[i]) #this is going to check if the course is present in the schedule, and if it has appeared more than once in the schedule
-        fitnessValue += conditionOne(scheduleArray[i]) #this is going to check if the course has been assigned to the same hall and timing
-        # fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned more than one time
+        fitnessValue += conditionOne(scheduleArray[i]) #this is going to check if the clash course has been assigned to the same hall and timing
+        fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned to the same hall and timing
         # fitnessValue += conditionThree(scheduleArray[i]) #this is going to check 
         scheduleArray[i].fitnessValue = fitnessValue
         print("printing the fitness value")
@@ -249,11 +255,22 @@ def conditionOne(schedule):
         for i in range(0, len(clashArray) - 1):
             for j in range(0, len(chromosomeArray) - 1):
                 if (clashArray[i].firstCourse == chromosomeArray[j].courseName):
-                    if (chromosomeArray[j].timing == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].timing):
-                        if (chromosomeArray[j].hall == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].hall):
-                            fitnessValueConditionOne += -50
+                    for k in range(0, len(chromosomeArray) - 1):
+                        if (clashArray[i].secondCourse == chromosomeArray[k].courseName):
+                            if (chromosomeArray[j].timing == chromosomeArray[k].timing):
+                                if (chromosomeArray[j].hall == chromosomeArray[k].hall):
+                                    fitnessValueConditionOne += -100
+                                else:
+                                    fitnessValueConditionOne += 20
+                            else:
+                                fitnessValueConditionOne += 20
+                    # if (chromosomeArray[chromosomeArray.index(clashArray[i].firstCourse)].timing == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].timing):
+                    #     if (chromosomeArray[chromosomeArray.index(clashArray[i].firstCourse)].hall == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].hall):
+                    #         fitnessValueConditionOne += -100
 
     return fitnessValueConditionOne
+
+
            
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
