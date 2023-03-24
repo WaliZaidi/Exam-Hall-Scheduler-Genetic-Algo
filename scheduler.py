@@ -240,7 +240,7 @@ def conditionOne(schedule):
     
     chromosomeArray = schedule.chromosomeArray2
     
-    #checking if the same course has been assigned to the same hall and timing
+    #checking if courses has been assigned to the same hall and timing
     fitnessValueConditionOne = 0
     if (len(clashArray) == 0):
         fitnessValueConditionOne += 20
@@ -251,7 +251,7 @@ def conditionOne(schedule):
                 if (clashArray[i].firstCourse == chromosomeArray[j].courseName):
                     if (chromosomeArray[j].timing == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].timing):
                         if (chromosomeArray[j].hall == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].hall):
-                            fitnessValueConditionOne += -10
+                            fitnessValueConditionOne += -50
 
     return fitnessValueConditionOne
            
