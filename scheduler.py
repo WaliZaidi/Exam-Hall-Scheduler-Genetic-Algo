@@ -325,8 +325,9 @@ def Crossover(scheduleArray1, crossoverProbability):
             else: #if its out of bounds for the schedule array, then we loop back to front
                 schedulerObj.chromosomeArray2[i].hall = scheduleArray1[0].chromosomeArray2[i].hall
                 schedulerObj.chromosomeArray2[i].timing = scheduleArray1[0].chromosomeArray2[i].timing
-    
-    return schedulerObj
+        scheduleArray1.append(schedulerObj)
+        
+    return scheduleArray1
     
     
 # ----------------------------MAIN FUNCTION--------------------------------------------
