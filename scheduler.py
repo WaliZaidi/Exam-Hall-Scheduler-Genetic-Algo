@@ -1,6 +1,8 @@
 import random
 import numpy as np
+import time
 
+startTime = time.time()
 print("Hello World")
 
 # ----------------------------ARRAYS--------------------------------------------
@@ -195,7 +197,6 @@ def scheduleGeneration():
         valueGetterSchedule = schedule([], 0)
         scheduler = chromosomeGeneration(valueGetterSchedule)
         scheduleArray.append(scheduler)
-    printSchedule()
     fitnessFunction()
 
 
@@ -308,10 +309,12 @@ def GA(scheduleArray1):
     
     for j in range(0, len(scheduleArray1[maxFitnessCount].chromosomeArray2) - 1):
         print(scheduleArray1[maxFitnessCount].chromosomeArray2[j].courseName + " " + scheduleArray1[maxFitnessCount].chromosomeArray2[j].hall + " " + scheduleArray1[maxFitnessCount].chromosomeArray2[j].timing + " " + str(scheduleArray1[maxFitnessCount].fitness))
+        
+    endTime = time.time()
+    print("The execution time taken is : " + str(endTime - startTime))
     
-        
+# ----------------------------CROSSOVER & MUTATION--------------------------------------------        
 
-        
 def Crossover(scheduleArray1, crossoverProbability):
     schedulerObj = schedule([], 0)
     for i in range(0, len(scheduleArray1) - 1):
@@ -349,6 +352,8 @@ def Mutation(scheduleArray1, mutationProbability):
     
     
 # ----------------------------MAIN FUNCTION--------------------------------------------
+        
+      
         
 print("Please enter the number of halls that are available for use")
 hallNum = input()

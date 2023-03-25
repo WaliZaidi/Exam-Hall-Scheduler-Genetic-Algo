@@ -48,3 +48,10 @@ schedule is done, gets data, the first and second fitness functions are done and
 
 the checking system for the clash arrays are in place, but now we need to check those that are not clashing to make sure tht they too are not clashing
 
+done for those that are not clashing
+
+then we did a lot of stuff that honestly i commented in the code file itseslf, so im not going to write here
+
+but yes, on 10:28, we were finally done with this, fully homebrewed assignment
+
+yey
