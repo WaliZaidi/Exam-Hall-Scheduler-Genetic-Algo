@@ -222,7 +222,6 @@ def fitnessFunction():
     GA(scheduleArray)
 
 def checkCoursePresence(schedule):
-    
     arrayChromo = schedule.chromosomeArray2
     
     fitnessValueCheckingPresence = 0
@@ -243,8 +242,8 @@ def checkCoursePresence(schedule):
     
     return fitnessValueCheckingPresence
     
-def conditionOne(schedule):
     
+def conditionOne(schedule):
     chromosomeArray = schedule.chromosomeArray2
     
     #checking if courses has been assigned to the same hall and timing
@@ -285,14 +284,13 @@ def conditionTwo(schedule):
 # ----------------------------GENETIC ALGORITHM--------------------------------------------
 
 def GA(scheduleArray1):
-    crossoverProbability = 3 #this is the probability of crossover that we are going to use by modding this
-    mutationProbability = 4 #this is the probability of mutation that we are going to use by modding this
+    crossoverProbability = 12 #this is the probability of crossover that we are going to use by modding this
+    mutationProbability = 7 #this is the probability of mutation that we are going to use by modding this
     generationScore = 10 #this is the number of generations that we are going to use
 
     for i in range(0, generationScore):
         Crossover(scheduleArray1, crossoverProbability)
         Mutation(scheduleArray1, mutationProbability)
-    # Evolution(scheduleArray1)
     
     printSchedule()
     
@@ -328,7 +326,7 @@ def Crossover(scheduleArray1, crossoverProbability):
                     scheduleArray1.append(scheduleArray1[i])
                 else: #if the crossover is going to go out of bounds of the chromosome array, then we are going to use the modding to get the value
                     if (crossoverProbability > len(schedulerObj.chromosomeArray2) - 1):
-                        chromoCrossoverProb = len(schedulerObj.chromosomeArray2) % crossoverProbability
+                        chromoCrossoverProb = len(schedulerObj.chromosomeArray2) - (crossoverProbability - 3)
                         scheduleArray1[i].chromosomeArray2[chromoCrossoverProb].hall = scheduleArray1[i + 1].chromosomeArray2[chromoCrossoverProb + 1].hall
                         scheduleArray1[i].chromosomeArray2[chromoCrossoverProb].timing = scheduleArray1[i + 1].chromosomeArray2[chromoCrossoverProb + 1].timing
                         scheduleArray1.append(schedulerObj)
@@ -348,13 +346,10 @@ def Mutation(scheduleArray1, mutationProbability):
                 scheduleArray[i].chromosomeArray2[i].hall = hallsArray[random.randint(0, len(hallsArray) - 1)].hallName
                 scheduleArray[i].chromosomeArray2[i].timing = timingsArray[random.randint(0, len(timingsArray) - 1)].timingName
             
-        
-    
-    
+            
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
-      
-        
+  
 print("Please enter the number of halls that are available for use")
 hallNum = input()
 
