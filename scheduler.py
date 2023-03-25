@@ -191,7 +191,7 @@ def chromosomeGeneration(valueGetterSchedule):
         
 def scheduleGeneration():
     print("Generating the schedule")
-    for i in range(0, 10):
+    for i in range(0, 99): #this basically controls the number of schedules that we want to generate
         valueGetterSchedule = schedule([], 0)
         scheduler = chromosomeGeneration(valueGetterSchedule)
         scheduleArray.append(scheduler)
@@ -286,19 +286,30 @@ def conditionTwo(schedule):
 def GA(scheduleArray1):
     crossoverProbability = 3 #this is the probability of crossover that we are going to use by modding this
     mutationProbability = 4 #this is the probability of mutation that we are going to use by modding this
-    print("printing the schedule array before crossover")
-    print(len(scheduleArray1))
-    Crossover(scheduleArray1, crossoverProbability)
-    print("printing the schedule array after crossover")
-    print(len(scheduleArray1))
-    
-    print("printing the schedule array before mutation")
-    print(len(scheduleArray1))
-    Mutation(scheduleArray1, mutationProbability)
-    print("printing the schedule array after mutation")
-    print(len(scheduleArray1))
+    generationScore = 10 #this is the number of generations that we are going to use
+
+    for i in range(0, generationScore):
+        Crossover(scheduleArray1, crossoverProbability)
+        Mutation(scheduleArray1, mutationProbability)
+    # Evolution(scheduleArray1)
     
     printSchedule()
+    
+    print("The best schedule is : ")
+    maxFitness = -100000
+    maxFitnessCount = 0
+    for i in range(0, len(scheduleArray1) - 1): #this is going to print out the best schedule
+        if (scheduleArray1[i].fitness > maxFitness):
+            maxFitness = scheduleArray1[i].fitness
+            maxFitnessCount = i
+    
+    print("The fitness value is : " + str(maxFitness))
+    print("The schedule is : ")
+    
+    for j in range(0, len(scheduleArray1[maxFitnessCount].chromosomeArray2) - 1):
+        print(scheduleArray1[maxFitnessCount].chromosomeArray2[j].courseName + " " + scheduleArray1[maxFitnessCount].chromosomeArray2[j].hall + " " + scheduleArray1[maxFitnessCount].chromosomeArray2[j].timing + " " + str(scheduleArray1[maxFitnessCount].fitness))
+    
+        
 
         
 def Crossover(scheduleArray1, crossoverProbability):
