@@ -217,8 +217,8 @@ def fitnessFunction():
         fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned to the same hall and timing
         # fitnessValue += conditionThree(scheduleArray[i]) #this is going to check 
         scheduleArray[i].fitnessValue = fitnessValue
-        print("printing the fitness value")
-        print(fitnessValue)
+        # print("printing the fitness value")
+        # print(fitnessValue)
     GA(scheduleArray)
 
 def checkCoursePresence(schedule):
@@ -285,10 +285,15 @@ def conditionTwo(schedule):
 # ----------------------------GENETIC ALGORITHM--------------------------------------------
 
 def GA(scheduleArray1):
-    crossoverProbability = 15 #this is the probability of crossover that we are going to use by modding this
+    crossoverProbability = 3 #this is the probability of crossover that we are going to use by modding this
     mutationProbability = 10 #this is the probability of mutation that we are going to use by modding this
-    scheduleArray1.append(GA(scheduleArray1))
+    print("printing the schedule array before crossover")
+    print(len(scheduleArray1))
+    Crossover(scheduleArray1, crossoverProbability)
+    print("printing the schedule array after crossover")
+    print(len(scheduleArray1))
     
+    printSchedule()
     # for i in range(0, len(scheduleArray1) - 1):
     #     schedulerObj = schedule([], 0)
     #     schedulerObj.chromosomeArray2 = scheduleArray1[i].chromosomeArray2
@@ -315,18 +320,20 @@ def Crossover(scheduleArray1, crossoverProbability):
         if (i % crossoverProbability == 0): #checking if the crossover probability is satisfied
             if (i + 1 < len(scheduleArray1) - 1): #make sure that the crossover is not going to go out of bounds of the schedule array
                 if ((i + 1 < len(schedulerObj.chromosomeArray2) - 1) and (i < len(schedulerObj.chromosomeArray2) - 1)): #make sure that the crossover is not going to go out of bounds of the chromosome array
-                    schedulerObj.chromosomeArray2[i].hall = scheduleArray1[i + 1].chromosomeArray2[i].hall
-                    schedulerObj.chromosomeArray2[i].timing = scheduleArray1[i + 1].chromosomeArray2[i].timing
+                    print("I am a stupid bastard") #checking out this by editing it
+                    scheduleArray1[i].chromosomeArray2[i].hall = scheduleArray1[i + 1].chromosomeArray2[i + 1].hall
+                    scheduleArray1[i].chromosomeArray2[i].timing = scheduleArray1[i + 1].chromosomeArray2[i + 1].timing
+                    scheduleArray1.append(scheduleArray1[i])
                 else: #if the crossover is going to go out of bounds of the chromosome array, then we are going to use the modding to get the value
                     if (crossoverProbability > len(schedulerObj.chromosomeArray2) - 1):
                         chromoCrossoverProb = len(schedulerObj.chromosomeArray2) % crossoverProbability
-                        schedulerObj.chromosomeArray2[chromoCrossoverProb].hall = scheduleArray1[i + 1].chromosomeArray2[chromoCrossoverProb].hall
-                        schedulerObj.chromosomeArray2[chromoCrossoverProb].timing = scheduleArray1[i + 1].chromosomeArray2[chromoCrossoverProb].timing
+                        scheduleArray1[i].chromosomeArray2[chromoCrossoverProb].hall = scheduleArray1[i + 1].chromosomeArray2[chromoCrossoverProb + 1].hall
+                        scheduleArray1[i].chromosomeArray2[chromoCrossoverProb].timing = scheduleArray1[i + 1].chromosomeArray2[chromoCrossoverProb + 1].timing
+                        scheduleArray1.append(schedulerObj)
             else: #if its out of bounds for the schedule array, then we loop back to front
-                schedulerObj.chromosomeArray2[i].hall = scheduleArray1[0].chromosomeArray2[i].hall
-                schedulerObj.chromosomeArray2[i].timing = scheduleArray1[0].chromosomeArray2[i].timing
-        scheduleArray1.append(schedulerObj)
-        
+                scheduleArray1[i].chromosomeArray2[i].hall = scheduleArray1[0].chromosomeArray2[i + 1].hall
+                scheduleArray1[i].chromosomeArray2[i].timing = scheduleArray1[0].chromosomeArray2[i + 1].timing
+                scheduleArray1.append(schedulerObj)
     return scheduleArray1
     
     
