@@ -214,7 +214,7 @@ def fitnessFunction():
         fitnessValue = 0
         fitnessValue += checkCoursePresence(scheduleArray[i]) #this is going to check if the course is present in the schedule, and if it has appeared more than once in the schedule
         fitnessValue += conditionOne(scheduleArray[i]) #this is going to check if the clash course has been assigned to the same hall and timing
-        # fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned to the same hall and timing
+        fitnessValue += conditionTwo(scheduleArray[i]) #this is going to check if a course has been assigned to the same hall and timing
         # fitnessValue += conditionThree(scheduleArray[i]) #this is going to check 
         scheduleArray[i].fitnessValue = fitnessValue
         print("printing the fitness value")
@@ -249,7 +249,7 @@ def conditionOne(schedule):
     #checking if courses has been assigned to the same hall and timing
     fitnessValueConditionOne = 0
     if (len(clashArray) == 0):
-        fitnessValueConditionOne += 20
+        fitnessValueConditionOne += 10
         return fitnessValueConditionOne
     else:
         for i in range(0, len(clashArray) - 1):
@@ -261,20 +261,25 @@ def conditionOne(schedule):
                                 if (chromosomeArray[j].hall == chromosomeArray[k].hall):
                                     fitnessValueConditionOne += -100
                                 else:
-                                    fitnessValueConditionOne += 20
+                                    fitnessValueConditionOne += 30
                             else:
                                 fitnessValueConditionOne += 20
-                    # if (chromosomeArray[chromosomeArray.index(clashArray[i].firstCourse)].timing == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].timing):
-                    #     if (chromosomeArray[chromosomeArray.index(clashArray[i].firstCourse)].hall == chromosomeArray[chromosomeArray.index(clashArray[i].secondCourse)].hall):
-                    #         fitnessValueConditionOne += -100
 
     return fitnessValueConditionOne
 
 
 def conditionTwo(schedule):
-    scheduleChromo = schedule.chromosomeArray2
     
-           
+    fitnessValueConditionTwo = 0
+    
+    scheduleChromo = schedule.chromosomeArray2
+    for i in range(0, len(scheduleChromo) - 1):
+        for j in range(0, len(scheduleChromo) - 1):
+                if ((scheduleChromo[i].hall == scheduleChromo[j].hall) and (scheduleChromo[i].timing == scheduleChromo[j].timing) and (scheduleChromo[i].courseName != scheduleChromo[j].courseName)):
+                    fitnessValueConditionTwo += -50
+    
+    return fitnessValueConditionTwo
+        
 # ----------------------------MAIN FUNCTION--------------------------------------------
         
 print("Please enter the number of halls that are available for use")
